@@ -43,14 +43,24 @@ function animate() {
 
 function makeMeshes() {
     var material,
+        icosa,
+        dodeca,
+        octa,
         geometry,
+        shapes,
         zpos;
 
 
-    geometry = new THREE.IcosahedronGeometry(5, 1);
+    icosa = new THREE.IcosahedronGeometry(5, 0);
+    dodeca = new THREE.DodecahedronGeometry(5, 0);
+    octa = new THREE.OctahedronGeometry(5, 0);
+
+    shapes = [icosa, dodeca, octa];
+
 
     for (zpos = -1000; zpos < 1000; zpos += 20) {
         material = new THREE.MeshLambertMaterial({color: Math.random() * 0xffffff, wireframe: true, wireframeLinewidth: 2});
+        geometry = shapes[Math.floor(Math.random()*shapes.length)];
         mesh = new THREE.Mesh(geometry, material);
         mesh.position.x = Math.random() * 1000 - 500;
         mesh.position.y = Math.random() * 1000 - 500;
