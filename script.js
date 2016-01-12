@@ -13,7 +13,7 @@ init();
 
 function init() {
     camera = new THREE.PerspectiveCamera(80, window.innerWidth/window.innerHeight, 1, 4000);
-    camera.position.z = 500;
+    camera.position.z = 1000;
 
     scene = new THREE.Scene();
     scene.add(camera);
@@ -43,20 +43,12 @@ function animate() {
 
 function makeMeshes() {
     var material,
-        icosa,
-        dodeca,
-        octa,
+        icosa = new THREE.IcosahedronGeometry(5, 0),
+        dodeca = new THREE.DodecahedronGeometry(5, 0),
+        octa = new THREE.OctahedronGeometry(5, 0),
+        shapes = [icosa, dodeca, octa],
         geometry,
-        shapes,
         zpos;
-
-
-    icosa = new THREE.IcosahedronGeometry(5, 0);
-    dodeca = new THREE.DodecahedronGeometry(5, 0);
-    octa = new THREE.OctahedronGeometry(5, 0);
-
-    shapes = [icosa, dodeca, octa];
-
 
     for (zpos = -1000; zpos < 1000; zpos += 20) {
         material = new THREE.MeshLambertMaterial({color: Math.random() * 0xffffff, wireframe: true, wireframeLinewidth: 2});
@@ -77,9 +69,14 @@ function updateMeshes() {
 
     for (i = 0; i < meshes.length; i++) {
         mesh = meshes[i];
-        mesh.position.z += mouseY * 0.1;
         mesh.rotation.x = Date.now() * 0.0005;
         mesh.rotation.y = Date.now() * 0.00025;
+
+        if (mouseY < window.innerHeight/2) {
+            mesh.position.z += mouseY * 0.05;
+        } else {
+            mesh.position.z += mouseY * 0.1;
+        }
 
         if (mesh.position.z > 1000) {
             mesh.position.z -= 2000;
@@ -88,7 +85,6 @@ function updateMeshes() {
 }
 
 function onMouseMove( event ) {
-    // store the mouseX and mouseY position
     mouseX = event.clientX;
     mouseY = event.clientY;
 }
