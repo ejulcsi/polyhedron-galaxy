@@ -1,3 +1,3 @@
 #Polyhedron galaxy
 
-Practicing exercise with ThreeJS
+Practicing ThreeJS on random 3d objects with random colors.
